@@ -69,58 +69,46 @@ class ResturantDetailState extends State<ResturantDetail> with SingleTickerProvi
               text: "Ready in 20Min",
             ),
           Expanded(
-            child: DetailTabView(tabController: tabController,),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: TabBar(
+                    indicator: UnderlineTabIndicator(
+                        borderSide: BorderSide.none
+                    ),
+                    labelStyle: TextStyle(color: primaryColor),
+                    unselectedLabelColor: greyColor,
+                    labelColor: primaryColor,
+                    controller: tabController,
+                    tabs: <Widget>[
+                      Tab(
+                        child: Text(toUpper("Food menu"),style: detailsTabTitle(),),
+                      ),
+                      Tab(
+                        child: Text(toUpper("Place detail"),style: detailsTabTitle(),),
+                      ),
+                      Tab(
+                        child: Text(toUpper("Place review"),style: detailsTabTitle(),),
+                      )
+                    ],
+                  ),
+                  color: Colors.white,
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: <Widget>[
+                      MenuView(),
+                      PlaceDetailView(amount:widget.index ,image: widget.image,),
+                      PlaceReviewView()
+                    ],
+                  ),
+                )
+              ],
+            ),
           )
         ],
       )
-    );
-  }
-}
-
-class DetailTabView extends StatelessWidget{
-  final TabController tabController;
-
-  DetailTabView({required this.tabController});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(
-      children: <Widget>[
-        Container(
-          child: TabBar(
-            indicator: UnderlineTabIndicator(
-                borderSide: BorderSide.none
-            ),
-            labelStyle: TextStyle(color: primaryColor),
-            unselectedLabelColor: greyColor,
-            labelColor: primaryColor,
-            controller: tabController,
-            tabs: <Widget>[
-              Tab(
-                child: Text(toUpper("Food menu"),style: detailsTabTitle(),),
-              ),
-              Tab(
-                child: Text(toUpper("Place detail"),style: detailsTabTitle(),),
-              ),
-              Tab(
-                child: Text(toUpper("Place review"),style: detailsTabTitle(),),
-              )
-            ],
-          ),
-          color: Colors.white,
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: tabController,
-            children: <Widget>[
-              MenuView(),
-              PlaceDetailView(),
-              PlaceReviewView()
-            ],
-          ),
-        )
-      ],
     );
   }
 }
